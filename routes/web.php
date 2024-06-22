@@ -29,10 +29,13 @@ Route::get('/posts/{id}', function ($id) {
         1 => [
             'title' => 'post 1',
             'content' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias, aperiam?',
+            'is_new' => true,
+            'has_comment' => 'This post has a comment'
         ],
         2 => [
             'title' => 'post 2',
             'content' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias, aperiam?',
+            'is_new' => false
         ],
     ];
 
