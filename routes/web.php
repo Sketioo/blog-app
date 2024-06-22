@@ -24,5 +24,19 @@ Route::get('/contact', function () {
 })->name('home.contact');
 
 Route::get('/posts/{id}', function ($id) {
-    return "this is post with id: $id";
+    $post = [
+        1 => [
+            'title' => 'post 1',
+            'content' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias, aperiam?',
+        ],
+        2 => [
+            'title' => 'post 2',
+            'content' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias, aperiam?',
+        ],
+    ];
+
+    abort_if(!isset($post[$id]), 404);
+
+    // dd($post[$id]);
+    return view('posts.show', ['post' => $post[$id]]);
 })->name('posts.show');
