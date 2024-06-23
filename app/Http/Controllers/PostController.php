@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StorePostRequest;
 use App\Models\BlogPost;
-use Illuminate\Http\Request;
+
+// use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
@@ -24,20 +26,19 @@ class PostController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StorePostRequest $request)
     {
 
-        $request->validate([
-            'title' => 'required|string',
-            'content' => 'required|string',
-        ]);
+        $data = $request->validated();
 
         BlogPost::create([
-            'title' => $request->input('title'),
-            'content' => $request->input('content'),
+            'title' => $data['title'],
+            'content' => $data['content'],
         ]);
 
-        return redirect()->route('posts.index');
+        return redirect()
+            ->route('posts.index')
+            ->with('status', 'Blog post was created!');
     }
 
     /**
@@ -60,7 +61,7 @@ class PostController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(StorePostRequest $request, string $id)
     {
         //
     }
