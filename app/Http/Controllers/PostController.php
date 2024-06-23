@@ -31,10 +31,7 @@ class PostController extends Controller
 
         $data = $request->validated();
 
-        BlogPost::create([
-            'title' => $data['title'],
-            'content' => $data['content'],
-        ]);
+        BlogPost::create($data);
 
         return redirect()
             ->route('posts.index')

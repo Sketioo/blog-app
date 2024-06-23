@@ -10,11 +10,11 @@
         <div>
             @csrf
             <label for="title">Title:</label>
-            <input type="text" id="title" name="title" >
+            <input type="text" id="title" name="title" value="{{ old('title') }}">
         </div>
         <div>
             <label for="content">Content:</label>
-            <textarea id="content" name="content" ></textarea>
+            <textarea id="content" name="content">{{ old('content') }}</textarea>
         </div>
         <button type="submit">Create Post</button>
     </form>
