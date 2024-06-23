@@ -21,26 +21,34 @@ use Illuminate\Support\Facades\Route;
 //     return view('home.contact');
 // })->name('home.contact');
 
+$posts = [
+    1 => [
+        'title' => 'post 1',
+        'content' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias, aperiam?',
+        'is_new' => true,
+        'has_comment' => 'This post has a comment',
+    ],
+    2 => [
+        'title' => 'post 2',
+        'content' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias, aperiam?',
+        'is_new' => false,
+    ],
+];
+
 Route::view('/', 'home.index')->name('home.index');
 Route::view('/contact', 'home.contact')->name('home.contact');
 
-Route::get('/posts/{id}', function ($id) {
-    $post = [
-        1 => [
-            'title' => 'post 1',
-            'content' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias, aperiam?',
-            'is_new' => true,
-            'has_comment' => 'This post has a comment'
-        ],
-        2 => [
-            'title' => 'post 2',
-            'content' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias, aperiam?',
-            'is_new' => false
-        ],
-    ];
+Route::get('/posts', function () use ($posts) {
+    // dd(request()->all());
+    // dd(request()->query('page', '1'));
 
-    abort_if(!isset($post[$id]), 404);
+    return view('posts.index', ['posts' => $posts])
+        ->name('posts.index');
+});
 
-    // dd($post[$id]);
-    return view('posts.show', ['post' => $post[$id]]);
+Route::get('/posts/{id}', function ($id) use ($posts) {
+
+    abort_if(!isset($posts[$id]), 404);
+
+    return view('posts.show', ['post' => $posts[$id]]);
 })->name('posts.show');
