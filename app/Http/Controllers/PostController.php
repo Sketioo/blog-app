@@ -18,7 +18,7 @@ class PostController extends Controller
      */
     public function create()
     {
-
+        return view('posts.create');
     }
 
     /**
@@ -26,7 +26,18 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $request->validate([
+            'title' => 'required|string',
+            'content' => 'required|string',
+        ]);
+
+        BlogPost::create([
+            'title' => $request->input('title'),
+            'content' => $request->input('content'),
+        ]);
+
+        return redirect()->route('posts.index');
     }
 
     /**
