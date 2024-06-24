@@ -1,21 +1,27 @@
-@error('title')
-    <div class="alert alert-danger">{{ $message }}</div>
-@enderror
-<div>
+<div class="mb-3">
+    <label for="title" class="form-label">Title:</label>
+    <input type="text" class="form-control @error('title') is-invalid @enderror" id="title" name="title"
+        value="{{ old('title', optional($post ?? null)->title) }}">
+    @error('title')
+        <div class="invalid-feedback">{{ $message }}</div>
+    @enderror
+</div>
+
+<div class="mb-3">
     @csrf
-    <label for="title">Title:</label>
-    <input type="text" id="title" name="title" value="{{ old('title', optional($post ?? null)->title) }}">
+    <label for="content" class="form-label">Content:</label>
+    <textarea class="form-control @error('content') is-invalid @enderror" id="content" name="content">{{ old('content', optional($post ?? null)->content) }}</textarea>
+    @error('content')
+        <div class="invalid-feedback">{{ $message }}</div>
+    @enderror
 </div>
-<div>
-    <label for="content">Content:</label>
-    <textarea id="content" name="content">{{ old('content', optional($post ?? null)->content) }}</textarea>
-</div>
+
 @if ($errors->any())
-    <div>
-        @foreach ($errors->all() as $error)
-            <ul>
+    <div class="alert alert-danger">
+        <ul class="mb-0">
+            @foreach ($errors->all() as $error)
                 <li>{{ $error }}</li>
-            </ul>
-        @endforeach
+            @endforeach
+        </ul>
     </div>
 @endif
