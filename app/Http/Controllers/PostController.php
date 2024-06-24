@@ -52,7 +52,8 @@ class PostController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $post = BlogPost::findOrFail($id);
+        return view('posts.edit', ['post' => $post]);
     }
 
     /**
@@ -60,7 +61,11 @@ class PostController extends Controller
      */
     public function update(StorePostRequest $request, string $id)
     {
-        //
+        $post = BlogPost::findOrFail($id);
+        $data = $request->validated();
+        $post->update($data);
+        return redirect()->route('posts.show', $id)
+            ->with('status', 'Blog was updated!');
     }
 
     /**
