@@ -12,7 +12,7 @@
 
         @foreach ($posts as $post)
             <div class="card mb-4 shadow-sm">
-                <div class="card-header bg-primary text-white">
+                <div class="card-header bg-secondary text-white">
                     <h3 class="card-title">{{ $post->title }}</h3>
                 </div>
                 <div class="card-body">
