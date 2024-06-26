@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StorePostRequest;
 use App\Models\BlogPost;
+use Illuminate\Support\Facades\DB;
+use App\Http\Requests\StorePostRequest;
 
 // use Illuminate\Http\Request;
 
@@ -12,7 +13,18 @@ class PostController extends Controller
 
     public function index()
     {
-        return view('posts.index', ['posts' => BlogPost::all()]);
+        // DB::connection()->enableQueryLog();
+        // $posts = BlogPost::with('comments')->get();
+
+        // foreach ($posts as $post) {
+        //     foreach ($post->comments as $comment) {
+        //         echo $comment->content;
+        //     }
+        // }
+        // dd(DB::getQueryLog());
+
+        $posts = BlogPost::withCount('comments')->get();
+        return view('posts.index', ['posts' => $posts]);
     }
 
     /**

@@ -3,30 +3,21 @@
 @section('title', 'All Posts')
 
 @section('content')
-    <div class="container my-5">
-        @if (session('status'))
-            <div class="alert alert-success" role="alert">
-                {{ session('status') }}
+  <div class="container my-5">
+    <div class="row row-cols-1 row-cols-md-2 g-4">
+      @foreach ($posts as $post)
+        <div class="col">
+          <div class="card shadow-sm h-100">
+            <img src="{{ asset('https://contenthub-static.grammarly.com/blog/wp-content/uploads/2022/08/BMD-3398.png') }}" alt="{{ $post->title }}" class="card-img-top">  <div class="card-body d-flex flex-column justify-content-between">
+              <div class="text-end">
+                <span class="badge bg-primary text-white">Comments: {{ $post->comments_count }}</span>
+              </div>
+              <h3 class="card-title">{{ $post->title }}</h3>
+              <p class="card-text">{{ Str::limit($post->content, 100) }}</p> <a href="{{ route('posts.show', ['post' => $post->id]) }}" class="btn btn-primary">Read More</a>
             </div>
-        @endif
-
-        @foreach ($posts as $post)
-            <div class="card mb-4 shadow-sm">
-                <div class="card-header bg-secondary text-white">
-                    <h3 class="card-title">{{ $post->title }}</h3>
-                </div>
-                <div class="card-body">
-                    <p class="card-text">{{ $post->content }}</p>
-                </div>
-                <div class="card-footer d-flex justify-content-between align-items-center">
-                    <form action="{{ route('posts.destroy', ['post' => $post->id]) }}" method="post">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                    </form>
-                    <a href="{{ route('posts.edit', ['post' => $post->id]) }}" class="btn btn-primary btn-sm">Edit</a>
-                </div>
-            </div>
-        @endforeach
+          </div>
+        </div>
+      @endforeach
     </div>
+  </div>
 @endsection
