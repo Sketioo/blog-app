@@ -4,5 +4,7 @@
 @section('title', 'Contact')
 
 @section('content')
-  <h1>Contact page</h1>
+  <div class="container my-5">
+    <h1>Contact</h1>
+  </div>
 @endsection
