@@ -11,6 +11,10 @@ use App\Http\Requests\StorePostRequest;
 class PostController extends Controller
 {
 
+    public function __construct() {
+        $this->middleware('auth')->except(['index', 'show']);
+    }
+
     public function index()
     {
         // DB::connection()->enableQueryLog();
