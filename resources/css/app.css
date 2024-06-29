@@ -1,0 +1,37 @@
+body {
+  background-color: black;
+}
+
+.hero-section {
+    background-image: url("{{ asset('path/to/your/hero-image.jpg') }}");
+    /* Replace with your hero image URL */
+    background-size: cover;
+    background-position: center;
+    padding: 100px 0;
+    color: #fff;
+}
+
+.hero-section h1 {
+    font-size: 3rem;
+    font-weight: bold;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.hero-section p {
+    font-size: 1.2rem;
+    line-height: 1.5;
+}
+
+.card-img-top {
+    border-radius: 10px;
+    /* Add some rounded corners to the card images */
+}
+
+.card {
+    transition: transform 0.3s ease-in-out;
+}
+
+.card:hover {
+    transform: scale(1.02);
+    /* Add a subtle hover effect to cards */
+}
