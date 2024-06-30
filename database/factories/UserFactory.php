@@ -26,6 +26,15 @@ class UserFactory extends Factory
         ];
     }
 
+    public function defaultUser(): Factory
+    {
+        return $this->state([
+            'name' => 'Husein',
+            'email' => 'admin@gmail.com',
+            'password' => '$2y$10$o5MgOiajD9qPkJ/b0xTv.O/Ac9iTT2plHeccnoxOTzwze/CExei/G',
+        ]);
+    }
+
     /**
      * Indicate that the model's email address should be unverified.
      *
@@ -33,8 +42,9 @@ class UserFactory extends Factory
      */
     public function unverified(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn(array $attributes) => [
             'email_verified_at' => null,
         ]);
     }
+
 }
