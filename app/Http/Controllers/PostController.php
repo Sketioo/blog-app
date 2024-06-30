@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\BlogPost;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StorePostRequest;
 
 // use Illuminate\Http\Request;
@@ -59,8 +60,8 @@ class PostController extends Controller
      */
     public function show(string $id)
     {
-
-        return view('posts.show', ['post' => BlogPost::with('comments')->findOrFail($id)]);
+        $post = BlogPost::with('comments')->findOrFail($id);
+        return view('posts.show', ['post' => $post]);
     }
 
     /**

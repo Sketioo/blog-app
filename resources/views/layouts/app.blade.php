@@ -46,7 +46,7 @@
                         <li class="nav-item">
                             <a class="nav-link text-white" href="{{ route('logout') }}"
                                 onclick="event.preventDefault();
-                                document.getElementById('logout-form').submit();">Logout</a>
+                                document.getElementById('logout-form').submit();">Logout ({{ Auth::user()->name }})</a>
                         </li>
 
                         <form action="{{ route('logout') }}" id="logout-form" method="post" style="display: none;">
