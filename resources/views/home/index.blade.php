@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Welcome to [Website Name]')
+@section('title', 'Welcome to BlogKita')
 
 @section('content')
     <div class="container my-5">
