@@ -1,9 +1,9 @@
 <?php
 
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostController;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,11 +15,13 @@ use App\Http\Controllers\PostController;
 | be assigned to the "web" middleware group. Make something great!
 |
  */
-
 Route::get('/', [HomeController::class, 'home'])->name('home.index');
 Route::get('/contact', [HomeController::class, 'contact'])->name('home.contact');
 
 Auth::routes();
 
-Route::resource('posts', PostController::class)
-    ->only(['index', 'show', 'create', 'store', 'edit', 'update', 'destroy']);
+Route::resource('posts', PostController::class)->only([
+    'index', 'show', 'create', 'store', 'edit', 'update', 'destroy',
+]);
+
+Route::get('/my-posts', [PostController::class, 'userPosts'])->name('my-posts');

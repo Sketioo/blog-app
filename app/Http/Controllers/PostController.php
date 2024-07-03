@@ -2,17 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\BlogPost;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StorePostRequest;
+use App\Models\BlogPost;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 // use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->middleware('auth')->except(['index', 'show']);
     }
 
@@ -30,6 +31,17 @@ class PostController extends Controller
 
         $posts = BlogPost::withCount('comments')->paginate(10);
         return view('posts.index', ['posts' => $posts]);
+    }
+
+    public function userPosts()
+    {
+        $user = auth()->user();
+
+        $posts = BlogPost::where('user_id', $user->id)
+            ->with('comments')
+            ->paginate(10);
+
+        return view('posts.user-posts', ['posts' => $posts]);
     }
 
     /**
