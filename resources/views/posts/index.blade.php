@@ -17,7 +17,7 @@
                                 alt="{{ $post->title }}" class="card-img-top" style="object-fit: cover; height: 200px;">
                             <div class="card-body d-flex flex-column justify-content-between">
                                 <div class="text-end">
-                                    <span class="badge bg-primary text-white">Comments: {{ $post->comments_count }}</span>
+                                    <span class="badge bg-primary text-white my-1">Comments: {{ $post->comments_count }}</span>
                                 </div>
                                 <h3 class="card-title">{{ $post->title }}</h3>
                                 <p class="card-text">{{ Str::limit($post->content, 100) }}</p>

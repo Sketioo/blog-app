@@ -29,7 +29,7 @@ class PostController extends Controller
         // }
         // dd(DB::getQueryLog());
 
-        $posts = BlogPost::with(['user','comments'])->withCount('comments')->paginate(10);
+        $posts = BlogPost::with(['user','comments'])->withCount('comments')->paginate(12);
         return view('posts.index', ['posts' => $posts]);
     }
 
@@ -38,8 +38,8 @@ class PostController extends Controller
         $user = auth()->user();
 
         $posts = BlogPost::where('user_id', $user->id)
-            ->with('comments')
-            ->paginate(10);
+            ->withCount('comments')
+            ->paginate(12);
 
         return view('posts.user-posts', ['posts' => $posts]);
     }

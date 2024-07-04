@@ -44,7 +44,7 @@
                         </li>
                     @else
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="{{ route('my-posts') }}">My Posts</a>
+                            <a class="nav-link text-white" href="{{ route('user.posts') }}">My Posts</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-white" href="{{ route('logout') }}"

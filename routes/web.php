@@ -24,4 +24,4 @@ Route::resource('posts', PostController::class)->only([
     'index', 'show', 'create', 'store', 'edit', 'update', 'destroy',
 ]);
 
-Route::get('/my-posts', [PostController::class, 'userPosts'])->name('my-posts');
+Route::get('/user/posts', [PostController::class, 'userPosts'])->name('user.posts');
