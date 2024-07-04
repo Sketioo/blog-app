@@ -3021,6 +3021,15 @@ function withinMaxClamp(min, value, max) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _bootstrap__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
+document.addEventListener('DOMContentLoaded', function () {
+  var button = document.querySelector('.animate-button');
+  button.addEventListener('mouseover', function () {
+    this.style.backgroundColor = '#0056b3';
+  });
+  button.addEventListener('mouseout', function () {
+    this.style.backgroundColor = '#007bff';
+  });
+});
 
 /***/ }),
 

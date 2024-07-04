@@ -10,13 +10,13 @@
                 <p>Feel free to reach out to us using the information below or by filling out the contact form.</p>
                 <ul class="list-group">
                     <li class="list-group-item">
-                        <i class="fas fa-phone-alt mr-2"></i> +1 234-567-8900
+                        <i class="fas fa-phone-alt mr-2"></i> +6281 989 655 783
                     </li>
                     <li class="list-group-item">
-                        <i class="fas fa-envelope mr-2"></i> info@yourcompany.com
+                        <i class="fas fa-envelope mr-2"></i> martio@gethub.com
                     </li>
                     <li class="list-group-item">
-                        <i class="fas fa-map-marker-alt mr-2"></i> 123 Main Street, Anytown, CA 12345
+                        <i class="fas fa-map-marker-alt mr-2"></i> 123 Banyuwangi Street, Jawa Timur, CA 48464
                     </li>
                 </ul>
             </div>
