@@ -16,13 +16,23 @@
                             <img src="{{ asset('https://contenthub-static.grammarly.com/blog/wp-content/uploads/2022/08/BMD-3398.png') }}"
                                 alt="{{ $post->title }}" class="card-img-top">
                             <div class="card-body d-flex flex-column justify-content-between">
-                                <div class="text-end">
+                                <div class="text-end mb-3">
                                     <span class="badge bg-primary text-white">Comments: {{ $post->comments_count }}</span>
                                 </div>
                                 <h3 class="card-title">{{ $post->title }}</h3>
                                 <p class="card-text">{{ Str::limit($post->content, 100) }}</p>
-                                <a href="{{ route('posts.show', ['post' => $post->id]) }}" class="btn btn-primary">View
-                                    Post</a>
+                                <div class="mt-auto">
+                                    <a href="{{ route('posts.show', ['post' => $post->id]) }}" class="btn btn-primary mb-2">View
+                                        Post</a>
+                                    <div class="d-flex justify-content-end align-items-center">
+                                        <a href="{{ route('posts.edit', ['post' => $post->id]) }}" class="btn btn-outline-info me-2">Edit</a>
+                                        <form action="{{ route('posts.destroy', ['post' => $post->id]) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this post?')">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-outline-danger">Delete</button>
+                                        </form>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

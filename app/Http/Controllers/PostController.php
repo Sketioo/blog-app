@@ -91,7 +91,11 @@ class PostController extends Controller
      */
     public function update(StorePostRequest $request, string $id)
     {
+        $user = auth()->user();
         $post = BlogPost::findOrFail($id);
+        if ($user->id !== $post->user_id) {
+            abort(403, 'Cannot edit this post!');
+        }
         $data = $request->validated();
         $post->update($data);
         return redirect()->route('posts.show', $id)
@@ -103,10 +107,14 @@ class PostController extends Controller
      */
     public function destroy(string $id)
     {
+        $user = auth()->user();
         $post = BlogPost::findOrFail($id);
-        $post->delete();
-        return redirect()
-            ->route('posts.index')
+        if ($user->id === $post->user_id) {
+            $post->delete();
+            return redirect()
+            ->route('posts.show')
             ->with('status', 'Blog was deleted!');
+        }
+        abort(403, 'Cannot delete this post!');
     }
 }
