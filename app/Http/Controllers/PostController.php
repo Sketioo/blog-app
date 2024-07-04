@@ -39,7 +39,7 @@ class PostController extends Controller
 
         $posts = BlogPost::where('user_id', $user->id)
             ->withCount('comments')
-            ->paginate(12);
+            ->paginate(6);
 
         return view('posts.user-posts', ['posts' => $posts]);
     }
@@ -112,7 +112,7 @@ class PostController extends Controller
         if ($user->id === $post->user_id) {
             $post->delete();
             return redirect()
-            ->route('posts.show')
+            ->route('user.posts')
             ->with('status', 'Blog was deleted!');
         }
         abort(403, 'Cannot delete this post!');

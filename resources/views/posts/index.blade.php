@@ -32,7 +32,7 @@
                     </div>
                 @endforeach
             </div>
-            <div class="mt-4">
+            <div class="mt-4 d-flex justify-content-center mt-4">
                 {{ $posts->links('posts.partials.pagination') }} <!-- Pagination links -->
             </div>
         @endif

@@ -3,18 +3,23 @@
 @section('title', $post->title . ' - A Compelling Read')
 
 @section('content')
-    <div class="container my-5 d-flex flex-column align-items-center">
-        <div class="card shadow-sm" style="width: 36rem;">
+    <div class="container my-5">
+        @if (session('status'))
+            <div class="alert alert-success" role="alert">
+                {{ session('status') }}
+            </div>
+        @endif
+
+        <div class="card shadow-sm">
             <img src="{{ asset('https://contenthub-static.grammarly.com/blog/wp-content/uploads/2022/08/BMD-3398.png') }}"
                 alt="{{ $post->title }}" class="card-img-top">
             <div class="card-body">
-                <h2 class="card-title ">{{ $post->title }}</h2>
+                <h2 class="card-title">{{ $post->title }}</h2>
                 <p class="card-text">{{ $post->content }}</p>
                 <div class="card-footer d-flex justify-content-between">
-                    <span class="text-muted">Created: {{ Carbon\Carbon::parse($post->created_at)->format('F d, Y') }}</span>
-                    @if ($post->updated_at !== $post->created_at)
-                        <span class="text-muted">Updated:
-                            {{ Carbon\Carbon::parse($post->updated_at)->format('F d, Y') }}</span>
+                    <span class="text-muted">Created: {{ $post->created_at->format('F d, Y') }}</span>
+                    @if ($post->updated_at != $post->created_at)
+                        <span class="text-muted">Updated: {{ $post->updated_at->format('F d, Y') }}</span>
                     @endif
                 </div>
             </div>
@@ -26,9 +31,9 @@
                         @foreach ($post->comments as $comment)
                             <li class="list-group-item d-flex">
                                 <img src="{{ asset('https://www.gravatar.com/avatar/0?s=40&d=mm') }}" alt="Commenter Avatar"
-                                    class="rounded-circle mr-3" style="width: 40px; height: 40px;">
-                                <div class="media-body flex-grow-1 bg-light rounded p-2 mx-2">
-                                    <div class="d-flex justify-content-between my-1">
+                                    class="rounded-circle me-3" style="width: 40px; height: 40px;">
+                                <div class="media-body flex-grow-1 bg-light rounded p-2">
+                                    <div class="d-flex justify-content-between align-items-center mb-1">
                                         <strong>{{ $comment->user->name }}</strong>
                                         <span class="text-muted">{{ $comment->created_at->diffForHumans() }}</span>
                                     </div>
@@ -40,6 +45,10 @@
                             </li>
                         @endforeach
                     </ul>
+                </div>
+            @else
+                <div class="card-body">
+                    <p>No comments yet. Be the first to comment!</p>
                 </div>
             @endif
 

@@ -12,7 +12,10 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
+        $userCount = (int) $this->command->ask('How many users do you want to create?', 15);
+
         User::factory()->defaultUser()->create();
-        User::factory()->count(15)->create();
+
+        User::factory()->count($userCount)->create();
     }
 }

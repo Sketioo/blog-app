@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Models\BlogPost;
 use App\Models\Comment;
+use App\Models\BlogPost;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -11,19 +11,24 @@ class CommentSeeder extends Seeder
 {
     /**
      * Run the database seeds.
+     *
+     * @return void
      */
-    public function run(): void
+    public function run()
     {
-        if (User::count() == 0) {
-            User::factory()->count(15)->create();
+
+        if (User::count() === 0) {
+            $this->command->error('No users found. Run UserSeeder first.');
+            return;
         }
 
-        if (BlogPost::count() == 0) {
-            BlogPost::factory()->count(50)->create([
-                'user_id' => User::inRandomOrder()->first()->id,
-            ]);
+        if (BlogPost::count() === 0) {
+            $this->command->error('No blog posts found. Run BlogPostSeeder first.');
+            return;
         }
 
-        Comment::factory()->count(150)->create();
+        $commentCount = (int) $this->command->ask('How many comments do you want to create?', 150);
+
+        Comment::factory()->count($commentCount)->create();
     }
 }
