@@ -7,37 +7,52 @@
 // Bootstrap
 @import 'bootstrap/scss/bootstrap';
 
-.animate-button {
-  transition: transform 0.3s;
-}
+// .animate-button {
+//   transition: transform 0.3s;
+// }
 
-.animate-button:hover {
-  transform: scale(1.1);
-}
+// .animate-button:hover {
+//   transform: scale(1.1);
+// }
 
-.animate-img {
-  transition: transform 0.5s, filter 0.5s;
-}
+// .animate-img {
+//   transition: transform 0.5s, filter 0.5s;
+// }
 
-.animate-img:hover {
-  transform: scale(1.05);
-  filter: brightness(110%);
-}
+// .animate-img:hover {
+//   transform: scale(1.05);
+//   filter: brightness(110%);
+// }
 
-.animate-card {
-  transition: transform 0.3s;
-}
+// .animate-card {
+//   transition: transform 0.3s;
+// }
 
-.animate-card:hover {
-  transform: translateY(-10px);
-}
+// .animate-card:hover {
+//   transform: translateY(-10px);
+// }
 
-.card-body h3 a {
-  color: #333;
-  text-decoration: none;
-  transition: color 0.3s;
-}
+// .card-body h3 a {
+//   color: #333;
+//   text-decoration: none;
+//   transition: color 0.3s;
+// }
 
-.card-body h3 a:hover {
-  color: #007bff;
-}
+// .card-body h3 a:hover {
+//   color: #007bff;
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: space-between;
+// }
+
+// .card {
+//   overflow: hidden;
+//   .card-img-top {
+//       object-fit: cover;
+//       height: 200px;
+//   }
+// }
+
+// .btn-primary {
+//   margin-top: auto;
+// }

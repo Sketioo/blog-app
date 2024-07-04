@@ -29,7 +29,7 @@ class PostController extends Controller
         // }
         // dd(DB::getQueryLog());
 
-        $posts = BlogPost::withCount('comments')->paginate(10);
+        $posts = BlogPost::with(['user','comments'])->withCount('comments')->paginate(10);
         return view('posts.index', ['posts' => $posts]);
     }
 
@@ -73,6 +73,7 @@ class PostController extends Controller
     public function show(string $id)
     {
         $post = BlogPost::with('comments')->findOrFail($id);
+        $post->load(['comments.user']);
         return view('posts.show', ['post' => $post]);
     }
 

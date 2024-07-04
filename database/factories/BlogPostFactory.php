@@ -21,7 +21,7 @@ class BlogPostFactory extends Factory
     {
         return [
             'title' => $this->faker->sentence(),
-            'content' => $this->faker->paragraph(),
+            'content' => implode("\n\n", $this->faker->paragraphs(6)),
             'user_id' => function () {
                 return User::inRandomOrder()->first()->id;
             },

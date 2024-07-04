@@ -11966,37 +11966,3 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
-.animate-button {
-  transition: transform 0.3s;
-}
-
-.animate-button:hover {
-  transform: scale(1.1);
-}
-
-.animate-img {
-  transition: transform 0.5s, filter 0.5s;
-}
-
-.animate-img:hover {
-  transform: scale(1.05);
-  filter: brightness(110%);
-}
-
-.animate-card {
-  transition: transform 0.3s;
-}
-
-.animate-card:hover {
-  transform: translateY(-10px);
-}
-
-.card-body h3 a, .card-body .h3 a {
-  color: #333;
-  text-decoration: none;
-  transition: color 0.3s;
-}
-
-.card-body h3 a:hover, .card-body .h3 a:hover {
-  color: #007bff;
-}

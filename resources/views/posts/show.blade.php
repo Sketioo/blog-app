@@ -28,6 +28,10 @@
                                 <img src="{{ asset('https://www.gravatar.com/avatar/0?s=40&d=mm') }}" alt="Commenter Avatar"
                                     class="rounded-circle mr-3" style="width: 40px; height: 40px;">
                                 <div class="media-body flex-grow-1 bg-light rounded p-2 mx-2">
+                                    <div class="d-flex justify-content-between my-1">
+                                        <strong>{{ $comment->user->name }}</strong>
+                                        <span class="text-muted">{{ $comment->created_at->diffForHumans() }}</span>
+                                    </div>
                                     <p>{{ $comment->content }}</p>
                                     @auth
                                         <a href="#" class="btn btn-sm btn-outline-primary">Reply</a>
@@ -38,6 +42,7 @@
                     </ul>
                 </div>
             @endif
+
         </div>
     </div>
 @endsection
