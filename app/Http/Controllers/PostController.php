@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\PostDeleting;
 use App\Http\Requests\StorePostRequest;
 use App\Models\BlogPost;
 use App\Models\User;
@@ -29,7 +30,7 @@ class PostController extends Controller
         // }
         // dd(DB::getQueryLog());
 
-        $posts = BlogPost::with(['user','comments'])->withCount('comments')->paginate(12);
+        $posts = BlogPost::with(['user', 'comments'])->withCount('comments')->paginate(12);
         return view('posts.index', ['posts' => $posts]);
     }
 
@@ -109,12 +110,18 @@ class PostController extends Controller
     {
         $user = auth()->user();
         $post = BlogPost::findOrFail($id);
+
         if ($user->id === $post->user_id) {
+            event(new PostDeleting($post));
+
             $post->delete();
+
             return redirect()
-            ->route('user.posts')
-            ->with('status', 'Blog was deleted!');
+                ->route('user.posts')
+                ->with('status', 'Blog was deleted!');
         }
+
         abort(403, 'Cannot delete this post!');
     }
+
 }

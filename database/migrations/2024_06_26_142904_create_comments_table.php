@@ -18,11 +18,9 @@ return new class extends Migration
             $table->text('content')->require();
 
             $table->unsignedInteger('blog_post_id')->index();
-            $table->foreign('blog_post_id')->references('id')->on('blog_posts')
-                ->onDelete('CASCADE')->onUpdate('CASCADE');
+            $table->foreign('blog_post_id')->references('id')->on('blog_posts');
             $table->unsignedInteger('user_id')->index();
-            $table->foreign('user_id')->references('id')->on('users')
-                ->onDelete('CASCADE')->onUpdate('CASCADE');
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
