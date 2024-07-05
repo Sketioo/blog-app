@@ -47,11 +47,18 @@
                     </ul>
                 </div>
             @else
-                <div class="card-body">
-                    <p>No comments yet. Be the first to comment!</p>
+                <div class="card-body d-flex flex-column align-items-center py-5">
+                    <p class="text-muted">No comments yet. Be the first to share your thoughts!</p>
+                    <form action="" method="post" class="comment-form w-75 mb-3">
+                        @csrf
+                        <div class="form-floating mb-3">
+                            <textarea name="content" id="comment" class="form-control" rows="5" placeholder="Leave a comment..."></textarea>
+                            <label for="comment">Share your thoughts</label>
+                        </div>
+                        <button type="submit" class="btn btn-primary px-4">Submit Comment</button>
+                    </form>
                 </div>
             @endif
-
         </div>
     </div>
 @endsection
