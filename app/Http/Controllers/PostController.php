@@ -16,7 +16,7 @@ class PostController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth')->except(['index', 'show']);
+        $this->middleware('auth')->except(['index', 'show', 'userPosts']);
     }
 
     public function index()
@@ -85,6 +85,7 @@ class PostController extends Controller
      */
     public function edit(string $id)
     {
+        $this->authorize('posts.update', BlogPost::class);
         $post = BlogPost::findOrFail($id);
         return view('posts.edit', ['post' => $post]);
     }
@@ -99,7 +100,7 @@ class PostController extends Controller
         // if (Gate::forUser($user)->denies('update-post', $post)) {
         //     abort(403, 'Cannot edit this post!');
         // }
-        $this->authorize('update-post', $post);
+        $this->authorize('posts.update', $post);
         $data = $request->validated();
         $post->update($data);
         return redirect()->route('posts.show', $id)
@@ -116,7 +117,7 @@ class PostController extends Controller
         // if (Gate::forUser($user)->denies('update-post', $post)) {
         //     abort(403, 'Cannot delete this post!');
         // }
-        $this->authorize('delete-post', $post);
+        $this->authorize('posts.delete', $post);
         $post = BlogPost::findOrFail($id);
 
         if ($user->id === $post->user_id) {
