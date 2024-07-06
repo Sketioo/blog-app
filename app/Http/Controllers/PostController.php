@@ -7,6 +7,7 @@ use App\Http\Requests\StorePostRequest;
 use App\Models\BlogPost;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 // use Illuminate\Http\Request;
 
@@ -60,9 +61,10 @@ class PostController extends Controller
     {
 
         $data = $request->validated();
-
-        BlogPost::create($data);
-
+        $user = auth()->user();
+        $post = BlogPost::make($data);
+        $post->user_id = $user->id;
+        $post->save();
         return redirect()
             ->route('posts.index')
             ->with('status', 'Blog post was created!');
@@ -94,7 +96,7 @@ class PostController extends Controller
     {
         $user = auth()->user();
         $post = BlogPost::findOrFail($id);
-        if ($user->id !== $post->user_id) {
+        if (Gate::forUser($user)->denies('update-post', $post)) {
             abort(403, 'Cannot edit this post!');
         }
         $data = $request->validated();
