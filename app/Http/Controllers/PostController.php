@@ -96,9 +96,10 @@ class PostController extends Controller
     {
         $user = auth()->user();
         $post = BlogPost::findOrFail($id);
-        if (Gate::forUser($user)->denies('update-post', $post)) {
-            abort(403, 'Cannot edit this post!');
-        }
+        // if (Gate::forUser($user)->denies('update-post', $post)) {
+        //     abort(403, 'Cannot edit this post!');
+        // }
+        $this->authorize('update-post', $post);
         $data = $request->validated();
         $post->update($data);
         return redirect()->route('posts.show', $id)
@@ -111,6 +112,11 @@ class PostController extends Controller
     public function destroy(string $id)
     {
         $user = auth()->user();
+        $post = BlogPost::findOrFail($id);
+        // if (Gate::forUser($user)->denies('update-post', $post)) {
+        //     abort(403, 'Cannot delete this post!');
+        // }
+        $this->authorize('delete-post', $post);
         $post = BlogPost::findOrFail($id);
 
         if ($user->id === $post->user_id) {
