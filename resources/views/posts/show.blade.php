@@ -25,6 +25,16 @@
             </div>
 
             @if ($post->comments->count() > 0)
+                <div class="card-body d-flex flex-column align-items-center py-4">
+                    <form action="" method="post" class="comment-form w-75 mb-3">
+                        @csrf
+                        <div class="form-floating mb-3">
+                            <textarea name="content" id="comment" class="form-control" rows="10" cols="15" placeholder="Leave a comment..."></textarea>
+                            <label for="comment">Share your thoughts</label>
+                        </div>
+                        <button type="submit" class="btn btn-primary px-4">Submit</button>
+                    </form>
+                </div>
                 <div class="card-body mt-3">
                     <h5>Comments</h5>
                     <ul class="list-group list-group-flush">
@@ -47,7 +57,7 @@
                     </ul>
                 </div>
             @else
-                <div class="card-body d-flex flex-column align-items-center py-5">
+                <div class="card-body d-flex flex-column align-items-center py-4">
                     <p class="text-muted">No comments yet. Be the first to share your thoughts!</p>
                     <form action="" method="post" class="comment-form w-75 mb-3">
                         @csrf
@@ -55,7 +65,7 @@
                             <textarea name="content" id="comment" class="form-control" rows="5" placeholder="Leave a comment..."></textarea>
                             <label for="comment">Share your thoughts</label>
                         </div>
-                        <button type="submit" class="btn btn-primary px-4">Submit Comment</button>
+                        <button type="submit" class="btn btn-primary px-4">Submit</button>
                     </form>
                 </div>
             @endif
