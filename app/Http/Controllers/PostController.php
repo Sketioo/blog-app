@@ -59,11 +59,9 @@ class PostController extends Controller
     public function store(StorePostRequest $request)
     {
 
-        $data = $request->validated();
-        $user = auth()->user();
-        $post = BlogPost::make($data);
-        $post->user_id = $user->id;
-        $post->save();
+        $validatedData = $request->validated();
+        $validatedData['user_id'] = $request->user()->id;
+        BlogPost::create($validatedData);
         return redirect()
             ->route('posts.index')
             ->with('status', 'Blog post was created!');
