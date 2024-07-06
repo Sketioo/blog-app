@@ -7,7 +7,6 @@ use App\Http\Requests\StorePostRequest;
 use App\Models\BlogPost;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Gate;
 
 // use Illuminate\Http\Request;
 
@@ -85,7 +84,8 @@ class PostController extends Controller
      */
     public function edit(string $id)
     {
-        $this->authorize('posts.update', BlogPost::class);
+        $post = BlogPost::findOrFail($id);
+        $this->authorize('update', $post);
         $post = BlogPost::findOrFail($id);
         return view('posts.edit', ['post' => $post]);
     }
@@ -100,7 +100,7 @@ class PostController extends Controller
         // if (Gate::forUser($user)->denies('update-post', $post)) {
         //     abort(403, 'Cannot edit this post!');
         // }
-        $this->authorize('posts.update', $post);
+        $this->authorize('update', $post);
         $data = $request->validated();
         $post->update($data);
         return redirect()->route('posts.show', $id)
@@ -112,23 +112,20 @@ class PostController extends Controller
      */
     public function destroy(string $id)
     {
-        $user = auth()->user();
         $post = BlogPost::findOrFail($id);
         // if (Gate::forUser($user)->denies('update-post', $post)) {
         //     abort(403, 'Cannot delete this post!');
         // }
-        $this->authorize('posts.delete', $post);
+        $this->authorize('delete', $post);
         $post = BlogPost::findOrFail($id);
 
-        if ($user->id === $post->user_id) {
-            event(new PostDeleting($post));
+        event(new PostDeleting($post));
 
-            $post->delete();
+        $post->delete();
 
-            return redirect()
-                ->route('user.posts')
-                ->with('status', 'Blog was deleted!');
-        }
+        return redirect()
+            ->route('user.posts')
+            ->with('status', 'Blog was deleted!');
 
         abort(403, 'Cannot delete this post!');
     }
