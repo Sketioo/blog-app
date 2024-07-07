@@ -93,14 +93,13 @@ class PostController extends Controller
      */
     public function update(StorePostRequest $request, string $id)
     {
-        $user = auth()->user();
         $post = BlogPost::findOrFail($id);
-        // if (Gate::forUser($user)->denies('update-post', $post)) {
-        //     abort(403, 'Cannot edit this post!');
-        // }
+
         $this->authorize('update', $post);
+
         $data = $request->validated();
         $post->update($data);
+
         return redirect()->route('posts.show', $id)
             ->with('status', 'Blog was updated!');
     }
@@ -111,11 +110,8 @@ class PostController extends Controller
     public function destroy(string $id)
     {
         $post = BlogPost::findOrFail($id);
-        // if (Gate::forUser($user)->denies('update-post', $post)) {
-        //     abort(403, 'Cannot delete this post!');
-        // }
+
         $this->authorize('delete', $post);
-        $post = BlogPost::findOrFail($id);
 
         event(new PostDeleting($post));
 
