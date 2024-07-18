@@ -24,4 +24,7 @@ Route::resource('posts', PostController::class)->only([
     'index', 'show', 'create', 'store', 'edit', 'update', 'destroy',
 ]);
 
+Route::post('/posts/{post}/comments', [PostController::class, 'storeComment'])->name('posts.comment');
+
+// Route::get('/posts/search/{term}', [PostController::class, 'search'])->name('posts.search');
 Route::get('/user/posts', [PostController::class, 'userPosts'])->name('user.posts');

@@ -4,6 +4,7 @@
 
 @section('content')
     <div class="container my-5">
+        @include('posts.partials.search')
         @if (session('status'))
             <div class="alert alert-success" role="alert">
                 {{ session('status') }}

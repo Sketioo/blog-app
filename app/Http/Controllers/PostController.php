@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\PostDeleting;
-use App\Http\Requests\StorePostRequest;
-use App\Models\BlogPost;
 use App\Models\User;
+use App\Models\Comment;
+use App\Models\BlogPost;
+use App\Events\PostDeleting;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\StorePostRequest;
 
 // use Illuminate\Http\Request;
 
@@ -15,24 +17,20 @@ class PostController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth')->except(['index', 'show', 'userPosts']);
+        $this->middleware('auth')->except(['index', 'show', 'search']);
     }
 
     public function index()
     {
-        // DB::connection()->enableQueryLog();
-        // $posts = BlogPost::with('comments')->get();
-
-        // foreach ($posts as $post) {
-        //     foreach ($post->comments as $comment) {
-        //         echo $comment->content;
-        //     }
-        // }
-        // dd(DB::getQueryLog());
-
         $posts = BlogPost::with(['user', 'comments'])->withCount('comments')->paginate(12);
         return view('posts.index', ['posts' => $posts]);
     }
+
+    // public function search($term)
+    // {
+    //     $posts = BlogPost::search($term)->get();
+    //     return response()->json($posts);
+    // }
 
     public function userPosts()
     {
@@ -122,6 +120,21 @@ class PostController extends Controller
             ->with('status', 'Blog was deleted!');
 
         abort(403, 'Cannot delete this post!');
+    }
+
+    public function storeComment(Request $request,  BlogPost $post) {
+
+        $validatedData = $request->validate([
+            'content' => 'required|max:255'
+        ]);
+
+        $validatedData['blog_post_id'] = $post->id;
+        $validatedData['user_id'] = auth()->user()->id;
+
+        // $post->comments()->create($validatedData);
+        Comment::create($validatedData);
+
+        return redirect()->route('posts.show', ['post' => $post->id]);
     }
 
 }
