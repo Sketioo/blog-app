@@ -13,13 +13,13 @@ class BlogPost extends Model
 
     protected $fillable = ['title', 'content', 'user_id'] ;
 
-    // public function toSearchableArray(): array
-    // {
-    //     return [
-    //         'title' => $this->title,
-    //         'content' => $this->content,
-    //     ];
-    // }
+    public function toSearchableArray(): array
+    {
+        return [
+            'title' => $this->title,
+            'content' => $this->content,
+        ];
+    }
 
     public function comments(){
         return $this->hasMany(Comment::class);

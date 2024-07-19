@@ -28,11 +28,20 @@ class PostController extends Controller
         return view('posts.index', ['posts' => $posts]);
     }
 
-    // public function search($term)
-    // {
-    //     $posts = BlogPost::search($term)->get();
-    //     return response()->json($posts);
-    // }
+    public function search(Request $request)
+    {
+        $term = strip_tags($request->term);
+        // dd($term);
+        if ($term) {
+            $posts = BlogPost::search($term)->query(function ($query) {
+                $query->with(['user', 'comments'])->withCount('comments');
+            })->paginate(12);
+        } else {
+            $posts = BlogPost::with(['user', 'comments'])->withCount('comments')->paginate(12);
+        }
+
+        return view('posts.index', ['posts' => $posts]);
+    }
 
     public function userPosts()
     {

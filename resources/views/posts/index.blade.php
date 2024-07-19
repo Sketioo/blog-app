@@ -1,3 +1,4 @@
+<!-- index.blade.php -->
 @extends('layouts.app')
 
 @section('title', 'All Posts')
