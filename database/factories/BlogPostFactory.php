@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
-use App\Models\User;
 use App\Models\BlogPost;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -21,7 +21,9 @@ class BlogPostFactory extends Factory
     {
         return [
             'title' => $this->faker->sentence(),
-            'content' => implode("\n\n", $this->faker->paragraphs(6)),
+            'content' => implode("\n\n", array_map(function () {
+                return $this->faker->paragraph(12);
+            }, range(1, 6))),
             'user_id' => function () {
                 return User::inRandomOrder()->first()->id;
             },

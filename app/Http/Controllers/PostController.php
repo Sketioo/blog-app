@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
-use App\Models\Comment;
-use App\Models\BlogPost;
 use App\Events\PostDeleting;
+use App\Http\Requests\StorePostRequest;
+use App\Models\BlogPost;
+use App\Models\Comment;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Requests\StorePostRequest;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 
 // use Illuminate\Http\Request;
 
@@ -70,9 +72,30 @@ class PostController extends Controller
      */
     public function show(string $id)
     {
-        $post = BlogPost::with('comments')->findOrFail($id);
-        $post->load(['comments.user']);
-        return view('posts.show', ['post' => $post]);
+        $post = BlogPost::with('comments', 'comments.user', 'comments.replies')->findOrFail($id);
+        $post->loadCount('comments');
+        $post['content'] = Str::markdown($post->content);
+        $post['title'] = Str::markdown($post->title);
+
+        // Ambil komentar yang dibuat oleh pengguna saat ini
+        $userId = auth()->check() ? auth()->user()->id : null;
+        $comments = $post->comments;
+
+        $userComments = $comments->filter(function ($comment) use ($userId) {
+            return $comment->user_id === $userId;
+        });
+
+        $otherComments = $comments->filter(function ($comment) use ($userId) {
+            return $comment->user_id !== $userId;
+        });
+
+        // Gabungkan komentar pengguna di atas komentar lainnya
+        $sortedComments = $userComments->concat($otherComments);
+
+        return view('posts.show', [
+            'post' => $post,
+            'comments' => $sortedComments,
+        ]);
     }
 
     /**
@@ -96,6 +119,8 @@ class PostController extends Controller
         $this->authorize('update', $post);
 
         $data = $request->validated();
+        $data['title'] = strip_tags($data['title']);
+        $data['content'] = strip_tags($data['content']);
         $post->update($data);
 
         return redirect()->route('posts.show', $id)
@@ -122,19 +147,45 @@ class PostController extends Controller
         abort(403, 'Cannot delete this post!');
     }
 
-    public function storeComment(Request $request,  BlogPost $post) {
-
+    public function storeComment(Request $request, BlogPost $post)
+    {
         $validatedData = $request->validate([
-            'content' => 'required|max:255'
+            'content' => 'required|max:255',
+            'parent_comment_id' => 'exists:comments,id',
         ]);
+
+        $validatedData['content'] = strip_tags($validatedData['content']);
 
         $validatedData['blog_post_id'] = $post->id;
         $validatedData['user_id'] = auth()->user()->id;
 
-        // $post->comments()->create($validatedData);
         Comment::create($validatedData);
 
-        return redirect()->route('posts.show', ['post' => $post->id]);
+        return redirect()->route('posts.show', ['post' => $post->id])
+            ->with('status', 'Comment was added!');
+    }
+
+    public function updateComment(Request $request, BlogPost $post, Comment $comment)
+    {
+
+        Log::info('Update Comment Request:', $request->all());
+
+        $this->validate($request, [
+            'content' => 'required|string|max:255',
+        ]);
+
+        $comment->update([
+            'content' => $request->content,
+        ]);
+
+        return response()->json(['success' => 'Comment updated successfully', 'content' => $comment->content]);
+    }
+
+    public function deleteComment(BlogPost $post, Comment $comment)
+    {
+        $comment->delete();
+
+        return back()->with('status', 'Comment deleted successfully!');
     }
 
 }

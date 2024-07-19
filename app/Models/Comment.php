@@ -14,7 +14,8 @@ class Comment extends Model
     protected $fillable = [
         'user_id',
         'blog_post_id',
-        'content'
+        'content',
+        'parent_comment_id'
     ];
 
     //* The naming of 
@@ -24,6 +25,11 @@ class Comment extends Model
 
     public function user(){
         return $this->belongsTo(User::class);
+    }
+
+    public function replies()
+    {
+        return $this->hasMany(Comment::class, 'parent_comment_id')->orderBy('created_at', 'asc');
     }
 }
 

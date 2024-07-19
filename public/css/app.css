@@ -3010,6 +3010,15 @@ textarea.form-control-lg {
   opacity: var(--bs-btn-disabled-opacity);
 }
 
+.comment-content.editable {
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.comment-content.editable:hover {
+  background-color: #f0f0f0;
+}
+
 .btn-primary {
   --bs-btn-color: #fff;
   --bs-btn-bg: #0d6efd;

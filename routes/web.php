@@ -24,7 +24,12 @@ Route::resource('posts', PostController::class)->only([
     'index', 'show', 'create', 'store', 'edit', 'update', 'destroy',
 ]);
 
+//* Comment Related Route
 Route::post('/posts/{post}/comments', [PostController::class, 'storeComment'])->name('posts.comment');
+Route::put('/posts/{post}/comments/{comment}', [PostController::class, 'updateComment'])
+    ->name('posts.comment.update')->middleware('auth', 'can:update,comment');
+Route::delete('/posts/{post}/commets/{comment}', [PostController::class, 'deleteComment'])
+    ->name('posts.comment.destroy')->middleware('auth', 'can:delete,comment');
 
 // Route::get('/posts/search/{term}', [PostController::class, 'search'])->name('posts.search');
 Route::get('/user/posts', [PostController::class, 'userPosts'])->name('user.posts');
