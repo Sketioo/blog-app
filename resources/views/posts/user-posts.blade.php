@@ -4,6 +4,7 @@
 
 @section('content')
     <div class="container my-5">
+        @include('posts.partials.search')
         @if ($posts->isEmpty())
             <div class="alert alert-info" role="alert">
                 You haven't created any posts yet.

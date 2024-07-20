@@ -64,6 +64,14 @@
         </div>
     </nav>
 
+    <div class="container p-3">
+        @if (session('status'))
+            <div class="alert alert-success" role="alert">
+                {{ session('status') }}
+            </div>
+        @endif
+    </div>
+
     <div class="container flex-grow-1">
         @yield('content')
     </div>

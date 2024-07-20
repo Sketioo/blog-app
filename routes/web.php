@@ -31,5 +31,8 @@ Route::put('/posts/{post}/comments/{comment}', [PostController::class, 'updateCo
 Route::delete('/posts/{post}/commets/{comment}', [PostController::class, 'deleteComment'])
     ->name('posts.comment.destroy')->middleware('auth', 'can:delete,comment');
 
-Route::get('/search', [PostController::class, 'search'])->name('posts.search');
-Route::get('/user/posts', [PostController::class, 'userPosts'])->name('user.posts');
+Route::get('/user/posts', [PostController::class, 'userPosts'])->name('user.posts')->middleware('auth');
+
+Route::get('/search', [PostController::class, 'search'])->name('posts.search')->middleware('auth');
+
+Route::post('/contact', [HomeController::class, 'sendEmail'])->name('contact.email');

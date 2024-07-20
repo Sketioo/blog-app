@@ -23,22 +23,22 @@
 
             <div class="col-md-6">
                 <h2>Get in Touch</h2>
-                <form action="" method="post">
+                <form action="{{ route('contact.email') }}" method="post">
                     @csrf
                     <div class="form-group mb-3">
                         <label for="name" class="form-label">Name</label>
                         <input type="text" class="form-control" id="name" name="name" placeholder="Your Name"
-                            required>
+                            >
                     </div>
                     <div class="form-group mb-3">
                         <label for="email" class="form-label">Email Address</label>
                         <input type="email" class="form-control" id="email" name="email"
-                            placeholder="youremail@example.com" required>
+                            placeholder="youremail@example.com" >
                     </div>
                     <div class="form-group mb-3">
                         <label for="message" class="form-label">Message</label>
-                        <textarea class="form-control" id="message" name="message" rows="5" placeholder="Write your message here"
-                            required></textarea>
+                        <textarea class="form-control" id="message" name="messageContent" rows="5" placeholder="Write your message here"
+                            ></textarea>
                     </div>
                     <button type="submit" class="btn btn-primary">Send Message</button>
                 </form>

@@ -4,11 +4,6 @@
 
 @section('content')
     <div class="container my-5 justify-content-center">
-        @if (session('status'))
-            <div class="alert alert-success" role="alert">
-                {{ session('status') }}
-            </div>
-        @endif
 
         <div class="card shadow-sm">
             <img src="{{ asset('https://contenthub-static.grammarly.com/blog/wp-content/uploads/2022/08/BMD-3398.png') }}"

@@ -84,7 +84,7 @@ class PostController extends Controller
         $post = BlogPost::with('comments', 'comments.user', 'comments.replies')->findOrFail($id);
         $post->loadCount('comments');
         $post['content'] = Str::markdown($post->content);
-        $post['title'] = Str::markdown($post->title);
+        // $post['title'] = Str::markdown($post->title);
 
         // Ambil komentar yang dibuat oleh pengguna saat ini
         $userId = auth()->check() ? auth()->user()->id : null;
