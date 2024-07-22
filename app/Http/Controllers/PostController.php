@@ -24,7 +24,7 @@ class PostController extends Controller
 
     public function index()
     {
-        $posts = BlogPost::with(['user', 'comments'])->withCount('comments')->paginate(12);
+        $posts = BlogPost::with(['user', 'comments'])->withCount('comments')->latest()->paginate(12);
         return view('posts.index', ['posts' => $posts]);
     }
 
@@ -49,6 +49,7 @@ class PostController extends Controller
 
         $posts = BlogPost::where('user_id', $user->id)
             ->withCount('comments')
+            ->latest()
             ->paginate(6);
 
         return view('posts.user-posts', ['posts' => $posts]);

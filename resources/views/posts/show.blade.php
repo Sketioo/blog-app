@@ -43,7 +43,15 @@
                                     <div class="media-body flex-grow-1 bg-light rounded p-2"
                                         id="comment-{{ $comment->id }}">
                                         <div class="d-flex justify-content-between align-items-center mb-1">
-                                            <strong>{{ $comment->user->name }}</strong>
+                                            @if (auth()->check() && auth()->user()->id === $comment->user_id)
+                                                <strong style="color:blue; font-weight: bold">
+                                                    {{ $comment->user->name }}
+                                                </strong>
+                                            @else
+                                                <strong style="">
+                                                    {{ $comment->user->name }}
+                                                </strong>
+                                            @endif
                                             <span class="text-muted">{{ $comment->created_at->diffForHumans() }}</span>
                                         </div>
                                         <p class="comment-content"
