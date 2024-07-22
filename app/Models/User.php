@@ -3,6 +3,8 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use Illuminate\Contracts\Database\Query\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -21,7 +23,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'is_admin'
+        'is_admin',
     ];
 
     /**
@@ -48,7 +50,21 @@ class User extends Authenticatable
         return $this->hasMany(BlogPost::class);
     }
 
-    public function comments(){
+    public function comments()
+    {
         return $this->hasMany(Comment::class);
+    }
+
+    public function scopeMostActive(Builder $query)
+    {
+        return $query->withCount('comments')->orderByDesc('comments_count');
+    }
+
+    public function scopeMostPostLastMonth(Builder $query)
+    {
+        return $query->whereBetween(STATIC::CREATED_AT, [now()->subMonth(1), now()])
+            ->withCount('blogPosts')
+            ->having('blog_posts_count', '>=', 5)
+            ->orderByDesc('blog_posts_count');
     }
 }

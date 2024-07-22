@@ -11,32 +11,91 @@
                 There are currently no posts available.
             </div>
         @else
-            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-                @foreach ($posts as $post)
-                    <div class="col">
-                        <div class="card shadow-sm h-100">
-                            <img src="{{ asset('https://contenthub-static.grammarly.com/blog/wp-content/uploads/2022/08/BMD-3398.png') }}"
-                                alt="{{ $post->title }}" class="card-img-top" style="object-fit: cover; height: 200px;">
-                            <div class="card-body d-flex flex-column justify-content-between">
-                                <div class="text-end">
-                                    <span class="badge bg-primary text-white my-1">Comments: {{ $post->comments_count }}</span>
+            <div class="row">
+                <!-- Left Column for Posts -->
+                <div class="col-lg-8">
+                    <ul class="list-group">
+                        @foreach ($posts as $post)
+                        <li class="list-group-item py-3">
+                            <a href="{{ route('posts.show', ['post' => $post->id]) }}" class="text-decoration-none text-dark">
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <div>
+                                        <h5 class="mb-1 text-primary">{{ $post->title }}</h5>
+                                        <p class="mb-1 text-secondary">{{ Str::limit($post->content, 150) }}</p>
+                                        <small class="text-muted">Posted by <strong>{{ $post->user->name }}</strong></small>
+                                    </div>
+                                    <div class="text-end">
+                                        <span class="badge bg-primary text-white my-1">Comments: {{ $post->comments_count }}</span>
+                                        <span class="btn btn-outline-primary btn-sm mt-2">Read More</span>
+                                    </div>
                                 </div>
-                                <h3 class="card-title">{{ $post->title }}</h3>
-                                <p class="card-text">{{ Str::limit($post->content, 100) }}</p>
-                                <a href="{{ route('posts.show', ['post' => $post->id]) }}"
-                                    class="btn btn-primary mt-auto">Read
-                                    More</a>
-                                <div class="mt-3">
-                                    <small class="text-muted">Posted by {{ $post->user->name }}</small>
-                                </div>
-                            </div>
+                            </a>
+                        </li>                        
+                        @endforeach
+                    </ul>
+                    <div class="mt-4 d-flex justify-content-center">
+                        {{ $posts->links('posts.partials.pagination') }} <!-- Pagination links -->
+                    </div>
+                </div>
+                <!-- Right Column for Most Active User and Most Commented Post -->
+                <div class="col-lg-4">
+                    <!-- Most Commented Posts Card -->
+                    <div class="card mb-4 shadow-sm">
+                        <div class="card-header bg-primary text-white">
+                            Most Commented
+                        </div>
+                        <div class="card-body">
+                            <p class="text-muted mb-2">What people are currently talking about</p>
+                            <ul class="list-group list-group-flush">
+                                @foreach ($mostCommentedPosts as $post)
+                                    <li class="list-group-item">
+                                        <a href="{{ route('posts.show', $post) }}" class="text-decoration-none text-primary">{{ $post->title }}</a>
+                                    </li>
+                                @endforeach
+                            </ul>
                         </div>
                     </div>
-                @endforeach
+                
+                    <!-- Most Active Users Card -->
+                    <div class="card shadow-sm mb-4">
+                        <div class="card-header bg-primary text-white">
+                            Most Active Users Last Month
+                        </div>
+                        <div class="card-body">
+                            <p class="text-muted mb-2">Users with most posts written</p>
+                            <ul class="list-group list-group-flush">
+                                @foreach ($mostActiveUsers as $user)
+                                    <li class="list-group-item">
+                                        <div class="d-flex align-items-center">
+                                            <img src="https://via.placeholder.com/30" class="rounded-circle me-3" alt="User Image">
+                                            <div>{{ $user->name }}</div>
+                                        </div>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card shadow-sm">
+                        <div class="card-header bg-primary text-white">
+                            Most Active Last Month
+                        </div>
+                        <div class="card-body">
+                            <p class="text-muted mb-2">Users with most posts last month</p>
+                            <ul class="list-group list-group-flush">
+                                @foreach ($mostUsersPostLastMonth as $user)
+                                    <li class="list-group-item">
+                                        <div class="d-flex align-items-center">
+                                            <img src="https://via.placeholder.com/30" class="rounded-circle me-3" alt="User Image">
+                                            <div>{{ $user->name }}</div>
+                                        </div>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="mt-4 d-flex justify-content-center mt-4">
-                {{ $posts->links('posts.partials.pagination') }} <!-- Pagination links -->
-            </div>
-        @endif
+    </div>
+    @endif
     </div>
 @endsection

@@ -33,6 +33,6 @@ Route::delete('/posts/{post}/commets/{comment}', [PostController::class, 'delete
 
 Route::get('/user/posts', [PostController::class, 'userPosts'])->name('user.posts')->middleware('auth');
 
-Route::get('/search', [PostController::class, 'search'])->name('posts.search')->middleware('auth');
+Route::get('/search', [PostController::class, 'search'])->name('posts.search');
 
 Route::post('/contact', [HomeController::class, 'sendEmail'])->name('contact.email');

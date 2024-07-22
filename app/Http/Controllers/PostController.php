@@ -24,8 +24,13 @@ class PostController extends Controller
 
     public function index()
     {
-        $posts = BlogPost::with(['user', 'comments'])->withCount('comments')->latest()->paginate(12);
-        return view('posts.index', ['posts' => $posts]);
+        $posts = BlogPost::with(['user', 'comments'])->withCount('comments')->latest()->paginate(10);
+        return view('posts.index', [
+            'posts' => $posts,
+            'mostCommentedPosts' => BlogPost::mostCommented()->take(5)->get(),
+            'mostActiveUsers' => User::mostActive()->take(5)->get(),
+            'mostUsersPostLastMonth' => User::mostPostLastMonth()->take(5)->get()
+        ]);
     }
 
     public function search(Request $request)
@@ -35,12 +40,17 @@ class PostController extends Controller
         if ($term) {
             $posts = BlogPost::search($term)->query(function ($query) {
                 $query->with(['user', 'comments'])->withCount('comments');
-            })->paginate(12);
+            })->paginate(10);
         } else {
-            $posts = BlogPost::with(['user', 'comments'])->withCount('comments')->paginate(12);
+            $posts = BlogPost::with(['user', 'comments'])->withCount('comments')->paginate(10);
         }
 
-        return view('posts.index', ['posts' => $posts]);
+        return view('posts.index', [
+            'posts' => $posts,
+            'mostCommentedPosts' => BlogPost::mostCommented()->take(5)->get(),
+            'mostActiveUsers' => User::mostActive()->take(5)->get(),
+            'mostUsersPostLastMonth' => User::mostPostLastMonth()->take(5)->get()
+        ]);
     }
 
     public function userPosts()

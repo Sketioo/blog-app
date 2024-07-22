@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="{{ mix('css/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <script src="{{ mix('js/app.js') }}" defer></script>
     <script src="{{ asset('js/style.js') }}" defer></script>
     <title>Laravel - @yield('title')</title>
